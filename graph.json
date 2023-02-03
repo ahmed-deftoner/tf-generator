@@ -1,0 +1,52 @@
+{
+	"adjacency": {
+		"ALB": ["2"],
+		"EC2": ["3"]
+	},
+	"nodes": {
+		"ALB": {
+			"region": "us-east-1"
+		},
+		"DynamoDB#34": {
+			"region": "ap-south-1",
+			"properties": {
+				"name": "Users",
+				"read_capacity": "1",
+				"write_capacity": "1",
+				"hashKey": "user_id"
+			}
+		},
+		"DynamoDB#2": {
+			"region": "us-east-1",
+			"properties": {
+				"name": "Play",
+				"read_capacity": "2",
+				"write_capacity": "2",
+				"hashKey": "play_id"
+			}
+		},
+		"DynamoDB#3": {
+			"region": "us-east-1",
+			"properties": {
+				"name": "Play",
+				"read_capacity": "2",
+				"write_capacity": "2",
+				"hashKey": "play_id"
+			}
+		}
+	},
+	"edges": {
+		"1": {
+			"from": "*",
+			"to": "ALB"
+		},
+		"2": {
+			"from": "ALB",
+			"to": "EC2"
+		},
+		"3": {
+			"from": "EC2",
+			"to": "DynamoDB"
+		}
+	}
+}
