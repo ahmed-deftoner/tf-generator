@@ -56,13 +56,13 @@ func CreateDirs(nodes map[string]Node) {
 	}
 }
 
-func moveFile(id string, region string) {
+func moveFile(id string, region string, service string) {
 	// Read all content of src to data, may cause OOM for a large file.
-	data, err := ioutil.ReadFile("templates/dynamodb.tf")
+	data, err := ioutil.ReadFile("templates/" + service + ".tf")
 	if err != nil {
 		log.Fatal(err)
 	}
-	dst := "tf/" + region + "/dynamodb-" + id + ".tf"
+	dst := "tf/" + region + "/" + service + "-" + id + ".tf"
 	// Write data to dst
 	err = ioutil.WriteFile(dst, data, 0644)
 	if err != nil {
@@ -70,7 +70,7 @@ func moveFile(id string, region string) {
 	}
 }
 
-func modifyFile(node map[string]Node, id string, region string) {
+func createDynamoDB(node map[string]Node, id string, region string) {
 	src := "tf/" + region + "/dynamodb-" + id + ".tf"
 	txtFile, err := os.Open(src)
 	key := "DynamoDB#" + id
@@ -91,6 +91,33 @@ func modifyFile(node map[string]Node, id string, region string) {
 	final += raw[3] + "= \"" + node[key].Properties["hashKey"] + "\""
 	final += raw[4] + "= \"" + node[key].Properties["hashKey"] + "\""
 	final += raw[5] + "= \"S\"" + raw[6][:len(raw[6])-2]
+
+	ioutil.WriteFile(src, []byte(final), 0644)
+}
+
+func createRDS(node map[string]Node, id string, region string) {
+	src := "tf/" + region + "/rds-" + id + ".tf"
+	txtFile, err := os.Open(src)
+	key := "RDS#" + id
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Successfully Opened rds.tf")
+	defer txtFile.Close()
+	body, err := ioutil.ReadAll(txtFile)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	raw := strings.Split(string(body), "=")
+	var final string
+	final += raw[0][2:] + "= " + node[key].Properties["allocated_storage"]
+	final += raw[1] + "= \"" + node[key].Properties["db_name"] + "\""
+	final += raw[2] + "= \"" + node[key].Properties["engine"] + "\""
+	final += raw[3] + "= \"" + node[key].Properties["engine_version"] + "\""
+	final += raw[4] + "= \"" + node[key].Properties["instance_class"] + "\""
+	final += raw[5] + "= \"" + node[key].Properties["username"] + "\""
+	final += raw[6] + "= \"" + node[key].Properties["password"] + "\""
+	final += raw[7] + "= true" + raw[8][:len(raw[8])-2]
 
 	ioutil.WriteFile(src, []byte(final), 0644)
 }
@@ -117,20 +144,27 @@ func editProvider(region string) {
 }
 
 func main() {
-	fmt.Println("hhe")
 	graph := DecodeJSON("graph.json")
 	CreateDirs(graph.Nodes)
 	for k, n := range graph.Nodes {
 		raw := strings.Split(k, "#")
 		if raw[0] == "DynamoDB" {
 			if raw[1] != "" {
-				moveFile(raw[1], n.Region)
-				modifyFile(graph.Nodes, raw[1], n.Region)
+				moveFile(raw[1], n.Region, "dynamodb")
+				createDynamoDB(graph.Nodes, raw[1], n.Region)
 			} else {
-				moveFile("", n.Region)
-				modifyFile(graph.Nodes, "", n.Region)
+				moveFile("", n.Region, "dynamodb")
+				createDynamoDB(graph.Nodes, "", n.Region)
 			}
 			editProvider(n.Region)
+		} else if raw[0] == "RDS" {
+			if raw[1] != "" {
+				moveFile(raw[1], n.Region, "rds")
+				createRDS(graph.Nodes, raw[1], n.Region)
+			} else {
+				moveFile("", n.Region, "rds")
+				createRDS(graph.Nodes, "", n.Region)
+			}
 		}
 	}
 }
