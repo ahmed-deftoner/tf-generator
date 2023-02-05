@@ -9,10 +9,15 @@ import (
 func main() {
 	graph := utils.DecodeJSON("graph.json")
 	utils.CreateDirs(graph.Nodes)
-	//m := []string{}
+	m := []string{}
 	for k, n := range graph.Nodes {
+		if !utils.Contains(m, n.Region) {
+			m = append(m, n.Region)
+		}
 		raw := strings.Split(k, "#")
 		utils.CheckService(raw[0], raw[1], n)
-		utils.EditProvider(n.Region)
+	}
+	for _, v := range m {
+		utils.EditProvider(v)
 	}
 }
