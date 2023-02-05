@@ -5,4 +5,7 @@ resource "aws_elasticache_cluster" "memcached" {
   num_cache_nodes      = 2
   parameter_group_name = "default.memcached1.4"
   port                 = 11211
+  tags = {
+    Name = "mycache"
+  }
 }

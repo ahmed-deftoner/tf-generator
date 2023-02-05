@@ -66,6 +66,17 @@ func main() {
 				}
 				components.Component.CreateComponent(r)
 			}
+		} else if raw[0] == "Redis" {
+			utils.MoveFile(raw[1], n.Region, "redis")
+			r := components.Redis{
+				Id:         raw[1],
+				Name:       n.Properties["name"],
+				Cluster_id: n.Properties["cluster_id"],
+				Node_type:  n.Properties["node_type"],
+				Num_nodes:  n.Properties["num_cache_nodes"],
+				Region:     n.Region,
+			}
+			components.Component.CreateComponent(r)
 		}
 		utils.EditProvider(n.Region)
 	}
