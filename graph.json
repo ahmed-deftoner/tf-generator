@@ -40,7 +40,16 @@
 				"cluster_id": "cluster-example",
 				"node_type": "cache.t3.micro",
 				"num_cache_nodes": "1",
-				"Name": "mycache"
+				"name": "mycache"
+			}
+		},
+		"Neptune#12": {
+			"region": "ap-south-1",
+			"properties": {
+				"cluster_id": "cluster-example",
+				"instance_class": "db.r4.large",
+				"instances": "2",
+				"name": "mydb"
 			}
 		}
 	},

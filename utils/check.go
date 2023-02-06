@@ -51,5 +51,16 @@ func CheckService(service string, id string, n Node) {
 			Region:     n.Region,
 		}
 		components.Component.CreateComponent(m)
+	case "Neptune":
+		MoveFile(id, n.Region, "neptune")
+		m := components.Neptune{
+			Id:             id,
+			Name:           n.Properties["name"],
+			Cluster_id:     n.Properties["cluster_id"],
+			Instances:      n.Properties["instances"],
+			Instance_class: n.Properties["instance_class"],
+			Region:         n.Region,
+		}
+		components.Component.CreateComponent(m)
 	}
 }
