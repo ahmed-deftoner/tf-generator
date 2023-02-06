@@ -40,5 +40,16 @@ func CheckService(service string, id string, n Node) {
 			Region:     n.Region,
 		}
 		components.Component.CreateComponent(r)
+	case "Memcached":
+		MoveFile(id, n.Region, "memcached")
+		m := components.Memcached{
+			Id:         id,
+			Name:       n.Properties["name"],
+			Cluster_id: n.Properties["cluster_id"],
+			Node_type:  n.Properties["node_type"],
+			Num_nodes:  n.Properties["num_cache_nodes"],
+			Region:     n.Region,
+		}
+		components.Component.CreateComponent(m)
 	}
 }

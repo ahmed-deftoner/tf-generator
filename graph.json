@@ -38,11 +38,8 @@
 			"region": "ap-south-1",
 			"properties": {
 				"cluster_id": "cluster-example",
-				"engine": "memcached",
 				"node_type": "cache.t3.micro",
 				"num_cache_nodes": "1",
-				"parameter_group_name": "default.memcached1.4",
-				"port": "11211",
 				"Name": "mycache"
 			}
 		}

@@ -1,11 +1,11 @@
-resource "aws_elasticache_cluster" "memcached" {
-  cluster_id           = "cluster-example"
-  engine               = "memcached"
-  node_type            = "cache.m4.large"
-  num_cache_nodes      = 2
-  parameter_group_name = "default.memcached1.4"
-  port                 = 11211
+/*resource "aws_elasticache_cluster" "memcached" {
+  cluster_id           = 
+  engine               = 
+  node_type            = 
+  num_cache_nodes      = 
+  parameter_group_name = 
+  port                 = 
   tags = {
-    Name = "mycache"
+    Name = 
   }
-}
+}*/
