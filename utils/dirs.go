@@ -31,9 +31,9 @@ func CreateDirs(nodes map[string]Node) {
 	}
 }
 
-func MoveFile(id string, region string, service string) {
+func MoveFile(id string, region string, service string, subdir string) {
 	// Read all content of src to data, may cause OOM for a large file.
-	data, err := ioutil.ReadFile("templates/" + service + ".tf")
+	data, err := ioutil.ReadFile("templates/" + subdir + "/" + service + ".tf")
 	if err != nil {
 		log.Fatal(err)
 	}

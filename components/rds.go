@@ -34,6 +34,9 @@ func (r RDS) CreateComponent() {
 	}
 	raw := strings.Split(string(body), "=")
 	var final string
+	identifier := strings.Split(raw[0][2:], "\"")
+	final += identifier[0] + " \"" + identifier[1] + "\" \"rds_" + r.Id + "\"" +
+		identifier[4] + "= " + r.AllocatedStorage
 	final += raw[0][2:] + "= " + r.AllocatedStorage
 	final += raw[1] + "= \"" + r.DBName + "\""
 	final += raw[2] + "= \"" + r.Engine + "\""

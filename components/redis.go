@@ -31,7 +31,9 @@ func (r Redis) CreateComponent() {
 	}
 	raw := strings.Split(string(body), "=")
 	var final string
-	final += raw[0][2:] + "= \"" + r.Cluster_id + "\""
+	identifier := strings.Split(raw[0][2:], "\"")
+	final += identifier[0] + " \"" + identifier[1] + "\" \"redis_" + r.Id + "\"" +
+		identifier[4] + "= \"" + r.Cluster_id + "\""
 	final += raw[1] + "= \"redis\""
 	final += raw[2] + "= \"" + r.Node_type + "\""
 	final += raw[3] + "= " + r.Num_nodes

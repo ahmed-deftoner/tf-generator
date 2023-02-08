@@ -31,12 +31,17 @@ func (n Neptune) CreateComponent() {
 	}
 	raw := strings.Split(string(body), "=")
 	var final string
+	identifier := strings.Split(raw[0][2:], "\"")
+	final += identifier[0] + " \"" + identifier[1] + "\" \"neptune_cluster_" + n.Id + "\"" +
+		identifier[4] + "= \"" + n.Cluster_id + "\""
 	final += raw[0][2:] + "= \"" + n.Cluster_id + "\""
 	final += raw[1] + "= \"neptune\""
 	final += raw[2] + "= true"
 	final += raw[3] + "= true" + raw[4] + "= "
 	final += raw[5] + "= \"" + n.Name + "\""
-	final += raw[6] + "= " + n.Instances
+	identifier = strings.Split(raw[6], "\"")
+	final += identifier[0] + " \"" + identifier[1] + "\" \"neptune_instance_" + n.Id + "\"" +
+		identifier[4] + "= " + n.Instances
 	final += raw[7] + "= aws_neptune_cluster.default.id"
 	final += raw[8] + "= \"neptune\""
 	final += raw[9] + "= \"" + n.Instance_class + "\""

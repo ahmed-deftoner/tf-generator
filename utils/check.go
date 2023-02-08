@@ -5,7 +5,7 @@ import "github.com/ahmed-deftoner/tf-generator/components"
 func CheckService(service string, id string, n Node) {
 	switch service {
 	case "DynamoDB":
-		MoveFile(id, n.Region, "dynamodb")
+		MoveFile(id, n.Region, "dynamodb", "db")
 		d := components.DynamoDB{
 			Id:             id,
 			Name:           n.Properties["name"],
@@ -16,7 +16,7 @@ func CheckService(service string, id string, n Node) {
 		}
 		components.Component.CreateComponent(d)
 	case "RDS":
-		MoveFile(id, n.Region, "rds")
+		MoveFile(id, n.Region, "rds", "db")
 		r := components.RDS{
 			Id:               id,
 			AllocatedStorage: n.Properties["allocated_storage"],
@@ -30,7 +30,7 @@ func CheckService(service string, id string, n Node) {
 		}
 		components.Component.CreateComponent(r)
 	case "Redis":
-		MoveFile(id, n.Region, "redis")
+		MoveFile(id, n.Region, "redis", "db")
 		r := components.Redis{
 			Id:         id,
 			Name:       n.Properties["name"],
@@ -41,7 +41,7 @@ func CheckService(service string, id string, n Node) {
 		}
 		components.Component.CreateComponent(r)
 	case "Memcached":
-		MoveFile(id, n.Region, "memcached")
+		MoveFile(id, n.Region, "memcached", "db")
 		m := components.Memcached{
 			Id:         id,
 			Name:       n.Properties["name"],
@@ -52,7 +52,7 @@ func CheckService(service string, id string, n Node) {
 		}
 		components.Component.CreateComponent(m)
 	case "Neptune":
-		MoveFile(id, n.Region, "neptune")
+		MoveFile(id, n.Region, "neptune", "db")
 		m := components.Neptune{
 			Id:             id,
 			Name:           n.Properties["name"],

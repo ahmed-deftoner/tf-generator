@@ -31,6 +31,9 @@ func (m Memcached) CreateComponent() {
 	}
 	raw := strings.Split(string(body), "=")
 	var final string
+	identifier := strings.Split(raw[0][2:], "\"")
+	final += identifier[0] + " \"" + identifier[1] + "\" \"memcached_" + m.Id + "\"" +
+		identifier[4] + "= \"" + m.Cluster_id + "\""
 	final += raw[0][2:] + "= \"" + m.Cluster_id + "\""
 	final += raw[1] + "= \"memcached\""
 	final += raw[2] + "= \"" + m.Node_type + "\""
