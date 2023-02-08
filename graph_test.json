@@ -1,0 +1,70 @@
+{
+	"adjacency": {
+		"ALB": ["2"],
+		"EC2": ["3"]
+	},
+	"nodes": {
+		"DynamoDB#34": {
+			"region": "ap-south-1",
+			"properties": {
+				"name": "Users",
+				"read_capacity": "1",
+				"write_capacity": "1",
+				"hashKey": "user_id"
+			}
+		},
+		"RDS#12": {
+			"region": "ap-south-1",
+			"properties": {
+				"allocated_storage": "10",
+				"db_name": "mydb",
+				"engine": "mysql",
+				"engine_version": "5.7",
+				"instance_class": "db.t3.micro",
+				"username": "foo",
+				"password": "foobarbaz"
+			}
+		},
+		"Redis#12": {
+			"region": "ap-south-1",
+			"properties": {
+				"cluster_id": "cluster-example",
+				"node_type": "cache.t3.micro",
+				"num_cache_nodes": "1",
+				"name": "mycache"
+			}
+		},
+		"Memcached#12": {
+			"region": "ap-south-1",
+			"properties": {
+				"cluster_id": "cluster-example",
+				"node_type": "cache.t3.micro",
+				"num_cache_nodes": "1",
+				"name": "mycache"
+			}
+		},
+		"Neptune#12": {
+			"region": "ap-south-1",
+			"properties": {
+				"cluster_id": "cluster-example",
+				"instance_class": "db.r4.large",
+				"instances": "2",
+				"name": "mydb"
+			}
+		}
+	},
+	"edges": {
+		"1": {
+			"from": "*",
+			"to": "ALB"
+		},
+		"2": {
+			"from": "ALB",
+			"to": "EC2"
+		},
+		"3": {
+			"from": "EC2",
+			"to": "DynamoDB"
+		}
+	}
+}

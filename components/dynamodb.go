@@ -31,7 +31,9 @@ func (d DynamoDB) CreateComponent() {
 	}
 	raw := strings.Split(string(body), "=")
 	var final string
-	final += raw[0][2:] + "= \"" + d.Name + "\""
+	identifier := strings.Split(raw[0][2:], "\"")
+	final += identifier[0] + " \"" + identifier[1] + "\" \"dynamodb_" + d.Id + "\"" +
+		identifier[4] + "= \"" + d.Name + "\""
 	final += raw[1] + "= " + d.Read_capacity
 	final += raw[2] + "= " + d.Write_capacity
 	final += raw[3] + "= \"" + d.Hash_key + "\""
