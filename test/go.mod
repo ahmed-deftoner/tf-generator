@@ -1,4 +1,4 @@
-module github.com/ahmed-deftoner/tf-generator
+module lambda-test
 
 go 1.19
 

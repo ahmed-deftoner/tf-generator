@@ -14,7 +14,7 @@
 			}
 		},
 		"DynamoDB#15": {
-			"region": "ap-south-1",
+			"region": "us-east-1",
 			"properties": {
 				"name": "Play",
 				"read_capacity": "1",
