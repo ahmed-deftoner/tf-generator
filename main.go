@@ -1,12 +1,20 @@
 package main
 
 import (
+	"log"
+	"os/exec"
 	"strings"
 
 	"github.com/ahmed-deftoner/tf-generator/utils"
 )
 
 func main() {
+	cmd := exec.Command("powershell", "cd tf")
+	err := cmd.Run()
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	graph := utils.DecodeJSON("graph.json")
 	utils.CreateDirs(graph.Nodes)
 	m := []string{}
