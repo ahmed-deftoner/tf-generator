@@ -62,5 +62,16 @@ func CheckService(service string, id string, n Node) {
 			Region:         n.Region,
 		}
 		components.Component.CreateComponent(m)
+	case "Lambda":
+		MoveFile(id, n.Region, "lambda", "compute")
+		l := components.Lambda{
+			Id:      id,
+			Region:  n.Region,
+			Name:    n.Properties["name"],
+			Runtime: n.Properties["runtime"],
+			Handler: n.Properties["handler"],
+			Git:     n.Properties["git"],
+		}
+		components.Component.CreateComponent(l)
 	}
 }

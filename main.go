@@ -1,14 +1,15 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
-	"os/exec"
+
+	//"fmt"
+
 	"strings"
 
 	"github.com/ahmed-deftoner/tf-generator/utils"
 )
 
+/*
 // PowerShell struct
 type PowerShell struct {
 	powerShell string
@@ -39,10 +40,10 @@ func (p *PowerShell) execute(args ...string) (stdOut string, stdErr string, err 
 var (
 	// Below command will enable the HyperV module
 	clone = `git clone https://github.com/ahmed-deftoner/ec2-benchmark.git`
-)
+)*/
 
 func main() {
-	posh := New()
+	//	posh := New()
 
 	// Scenario 1
 	// stdOut, stdErr, err := posh.execute(elevateProcessCmds)
@@ -55,8 +56,8 @@ func main() {
 	// ========= Behavior(expected one): StdErr: 'Enable-WindowsOptionalFeature : The requested operation requires elevation.
 
 	// Scenario 3 : Both scenario 1 and 2 combined
-	stdOut, stdErr, err := posh.execute(clone)
-	fmt.Printf("\ngit clone:\nStdOut : '%s'\nStdErr: '%s'\nErr: %s", strings.TrimSpace(stdOut), stdErr, err)
+	//	stdOut, stdErr, err := posh.execute(clone)
+	//	fmt.Printf("\ngit clone:\nStdOut : '%s'\nStdErr: '%s'\nErr: %s", strings.TrimSpace(stdOut), stdErr, err)
 	// ========= Above suppose to open a permission dialog, on click of "yes" should
 	// ========= run the hyperv enable command and once done ask for restart operation
 	graph := utils.DecodeJSON("graph.json")
@@ -69,7 +70,7 @@ func main() {
 		raw := strings.Split(k, "#")
 		utils.CheckService(raw[0], raw[1], n)
 	}
-	for _, v := range m {
+	/*	for _, v := range m {
 		utils.EditProvider(v)
-	}
+	}*/
 }

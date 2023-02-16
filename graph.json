@@ -4,22 +4,13 @@
 		"EC2": ["3"]
 	},
 	"nodes": {
-		"DynamoDB#34": {
+		"Lambda#12": {
 			"region": "ap-south-1",
 			"properties": {
-				"name": "Users",
-				"read_capacity": "1",
-				"write_capacity": "1",
-				"hashKey": "user_id"
-			}
-		},
-		"DynamoDB#15": {
-			"region": "us-east-1",
-			"properties": {
-				"name": "Play",
-				"read_capacity": "1",
-				"write_capacity": "1",
-				"hashKey": "play_id"
+				"name": "hello",
+				"runtime": "nodejs16.x",
+				"handler": "function.handler",
+				"git": "https://github.com/ahmed-deftoner/ec2-benchmark.git"
 			}
 		}
 	},
