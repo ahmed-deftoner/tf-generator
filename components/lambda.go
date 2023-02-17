@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"github.com/ahmed-deftoner/tf-generator/utils"
 )
 
 type Lambda struct {
@@ -18,6 +20,11 @@ type Lambda struct {
 }
 
 func (l Lambda) CreateComponent() {
+	utils.CloneRepo(l.Git)
+
+	names := strings.Split(l.Git, "/")
+	name := names[len(names)-1][:len(names[len(names)-1])-4]
+
 	src := "tf/" + l.Region + "/lambda-" + l.Id + ".tf"
 	txtFile, err := os.Open(src)
 	if err != nil {
@@ -54,19 +61,8 @@ func (l Lambda) CreateComponent() {
 
 	identifier = strings.Split(vars[6], "\"")
 	final += identifier[0] + "\"" + identifier[1] + "\" \"lambda_" + l.Name +
-		"\"" + identifier[4] + "= " + vars[7] + "= \"../${path.module}/hello\"" +
-		vars[8] + "= \"../${path.module}/hello.zip\"\n}"
-	fmt.Println(final)
-	/*final += identifier[0] + " \"" + identifier[1] + "\" \"" +
-		l.Name + "_lambda_" + l.Id + "\"" +
-		identifier[4] + "= \"" + l.Name + "-lambda" + "\""
-	final += raw[0][2:] + "= " + raw[1]
-	final += raw[1] + "= \"memcached\""
-	final += raw[2] + "= \"" + l.Node_type + "\""
-	final += raw[3] + "= " + l.Num_nodes
-	final += raw[4] + "= \"default.memcached.4\""
-	final += raw[5] + "= 11211" + raw[6] + "= "
-	final += raw[7] + "= \"" + l.Name + "\"" + raw[8][:len(raw[8])-2]
-	*/
+		"\"" + identifier[4] + "= " + vars[7] + "= \"" + name + "\"" +
+		vars[8] + "= \"" + name + ".zip\"\n}"
+
 	ioutil.WriteFile(src, []byte(final), 0644)
 }

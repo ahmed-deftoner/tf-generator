@@ -9,8 +9,8 @@
 			"properties": {
 				"name": "hello",
 				"runtime": "nodejs16.x",
-				"handler": "function.handler",
-				"git": "https://github.com/ahmed-deftoner/ec2-benchmark.git"
+				"handler": "hello.handler",
+				"git": "https://github.com/ahmed-deftoner/lambda-tester.git"
 			}
 		}
 	},
